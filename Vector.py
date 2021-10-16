@@ -10,6 +10,35 @@ class Vector3:
     def __str__(self):
         return '<' + "{:.3e}".format(self.x) + ' , ' + "{:.3e}".format(self.y) + ' , ' + "{:.3e}".format(self.z) + '>'
         
+    # OPERATION OVERRIDES -----------------------------------------------------------
+
+    # Overrides '+' Operation
+    def __add__(self, other): 
+        return Vector3.Add(self, other)
+
+    # Overrides '-' Operation
+    def __sub__(self, other):
+        return Vector3.Subtract(self, other)
+
+    # Overrides '*' Operation
+    def __mul__(self, other):
+        return Vector3.Multiply(self, other)
+
+    # Overrides '/' Operation
+    def __truediv__(self, other):
+        return Vector3.Divide(self, other)
+
+    # SELF REFERENCIAL MODIFYING FUNCTIONS ------------------------------------------
+
+    # Normaliizes this vector
+    def Normalize(self):
+        self = self.Normalized()
+
+    def Invert(self):
+        self = self.Inverted()
+
+    # SELF REFERENCIAL RETURNING FUNCTIONS ------------------------------------------
+
     # Magnitude of the Vector squared
     def Length2(self):
         return (self.x**2) + (self.y**2) + (self.z**2)
@@ -27,9 +56,7 @@ class Vector3:
     def Inverted(self):
         return Vector3(-self.x, -self.y, -self.z)
 
-    # Adds to this vector
-    def PlusEquals(self, vec):
-        return Vector3(self.x + vec.x, self.y + vec.y, self.z + vec.z)
+    # GENERAL VECTOR FUNCTIONS ------------------------------------------------------
 
     # Vector representation of 0
     def Zero():
@@ -41,23 +68,35 @@ class Vector3:
 
     # Adds two vectors
     def Add(vec1, vec2):
-        return Vector3(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z)
+        try:
+            return Vector3(vec1.x + vec2.x, vec1.y + vec2.y, vec1.z + vec2.z)
+        except:
+            raise TypeError("Cannot [V3] add a " + vec1.__class__.__name__ + " and a " + vec2.__class__.__name__)
 
     # Subtracts two vectors
     def Subtract(vec1, vec2):
-        return Vector3(vec1.x - vec2.x, vec1.y - vec2.y, vec1.z - vec2.z)
+        try:
+            return Vector3(vec1.x - vec2.x, vec1.y - vec2.y, vec1.z - vec2.z)
+        except:
+            raise TypeError("Cannot [V3] subtract a " + vec1.__class__.__name__ + " and a " + vec2.__class__.__name__)
 
     # Subtraction but worded different
     def VecFromTo(vecFrom, vecTo):
         return Vector3.Subtract(vecTo, vecFrom)
 
-    # Multiplies Vector by a scalar
+    # Multiplies Vector
     def Multiply(vec, b):
-        return Vector3(vec.x * b, vec.y * b, vec.z * b)
+        try:
+            return Vector3(vec.x * b, vec.y * b, vec.z * b)
+        except:
+            raise TypeError("Cannot [V3] multiply a " + vec.__class__.__name__ + " and a " + b.__class__.__name__)
 
     # Divides Vector by a scalar
     def Divide(vec, b):
-        if b != 0:
-            return Vector3.Multiply(vec, 1.0 / b)
-        else:
-            return None
+        try:
+            if b != 0:
+                return Vector3(vec.x / b, vec.y / b, vec.z / b)
+            else:
+                return None
+        except:
+            raise TypeError("Cannot [V3] divide a " + vec.__class__.__name__ + " and a " + b.__class__.__name__)

@@ -12,7 +12,4 @@ vPlanet = vPlanetInitial
 
 timeStep = 1e6
 
-force = PhysChis.GravitationalFields.ForceOnM2(rStar, rPlanet, mStar, mPlanet)
-vPlanet = PhysChis.Newtonian.TimeStepVelocity(v=vPlanet, f=force, m=mPlanet, timeStep=timeStep)
-rPlanet = PhysChis.Newtonian.TimeStepPosition(rPlanet, vPlanet, timeStep)
-print(Vector3.Subtract(rPlanet, rPlanetInitial))
+print(rStar + 1)
