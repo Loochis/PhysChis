@@ -1,0 +1,4 @@
+TIMESTEP = 0.1
+
+ONE_OVER_4PIE0 = 9e9
+G = 6.674e-11
