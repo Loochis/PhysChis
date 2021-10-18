@@ -1,7 +1,22 @@
 import PhysChis
 from Vector import Vector3
-import Constants
+import Constants as C
 
+# Field: Acts as a constant acceleration (gravity)
+class Field:
+    acceleration = Vector3.Zero()
+    bounds = (Vector3.One(), Vector3.One)
+    globalBounds = True
+
+    def __init__(self, acceleration = Vector3.Zero(), bounds = (Vector3.One(), Vector3.One()), globalBounds = True):
+        self.acceleration = acceleration
+        self.bounds = bounds
+        self.globalBounds = globalBounds
+
+    def InsideBounds(self, pos):
+        return self.globalBounds or (self.bounds[0] <= pos <= self.bounds[1])
+        
+# Generic object: follows standard newtonian motion
 class Object:
     position = Vector3.Zero()
     velocity = Vector3.Zero()
@@ -18,14 +33,19 @@ class Object:
         self.objCollection = objects
         self.fieldCollection = fields
 
-    def GetVelocity(self):
+    def GetVelocity(self) -> Vector3:
         return self.velocity
     
-    def GetMomentum(self):
-        return self.GetVelocity()
+    def GetMomentum(self) -> Vector3:
+        return self.GetVelocity() * self.mass
 
-    def GetNetForce(self):
-        raise NotImplementedError
+    def GetNetForce(self) -> Vector3:
+        netForce = Vector3.Zero()
+        for field in self.fieldCollection:
+            if field.InsideBounds(self.position):
+                netForce += field.acceleration*self.mass
+        return netForce
 
-    def GetNetImpulse(self):
-        return self.GetNetForce()
+    def GetNetImpulse(self) -> Vector3:
+        return self.GetNetForce() * C.TIMESTEP
+        

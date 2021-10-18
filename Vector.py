@@ -28,6 +28,33 @@ class Vector3:
     def __truediv__(self, other):
         return Vector3.Divide(self, other)
 
+    # COMPARISON OVERRIDES ----------------------------------------------------------
+
+    # Overrides '<' Comparison
+    def __lt__(self, other):
+        return self.x < other.x and self.y < other.y and self.z < other.z
+    
+    # Overrides '<=' Comparison
+    def __le__(self, other):
+        return self.x <= other.x and self.y <= other.y and self.z <= other.z
+
+    # Overrides '==' Comparison
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y and self.z == other.z
+
+    # Overrides '>=' Comparison
+    def __ge__(self, other):
+        return self.x >= other.x and self.y >= other.y and self.z >= other.z
+
+    # Overrides '>' Comparison
+    def __gt__(self, other):
+        return self.x > other.x and self.y > other.y and self.z > other.z
+
+    # Overrides '!=' Comparison
+    def __ne__(self, other):
+        return self.x != other.x or self.y != other.y or self.z != other.z
+
+
     # SELF REFERENCIAL MODIFYING FUNCTIONS ------------------------------------------
 
     # Normaliizes this vector
