@@ -36,6 +36,14 @@ class GravitationalFields:
         force /= r.Length2()
         return force
 
+    # Calculates the acceleration (force on m=1) by another mass due to gravity
+    def AccelerationByMass(rPoint, rMass, mass):
+        r = Vector3.VecFromTo(rPoint, rMass)
+        acceleration = r.Normalized() * (mass*C.G)
+        acceleration /= r.Length2()
+        return acceleration
+
+
 class Newtonian():
     def TimeStepVelocity(v: Vector3, f: Vector3, m: float, timeStep: float):
         a = f / m
