@@ -39,13 +39,20 @@ class Object:
     def GetMomentum(self) -> Vector3:
         return self.GetVelocity() * self.mass
 
-    def GetNetForce(self) -> Vector3:
-        netForce = Vector3.Zero()
+    def GetNetAcceleration(self) -> Vector3:
+        netAcc = Vector3.Zero()
         for field in self.fieldCollection:
             if field.InsideBounds(self.position):
-                netForce += field.acceleration*self.mass
-        return netForce
+                netAcc += field.acceleration
+        return netAcc
+
+    def GetNetForce(self) -> Vector3:
+        return self.GetNetAcceleration() * self.mass
 
     def GetNetImpulse(self) -> Vector3:
         return self.GetNetForce() * C.TIMESTEP
+
+    def Tick(self):
+        self.velocity += self.GetNetAcceleration() * C.TIMESTEP
+        self.position += self.GetVelocity() * C.TIMESTEP
         
