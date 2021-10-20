@@ -93,6 +93,10 @@ class Vector3:
     def One():
         return Vector3(1, 1, 1)
 
+    def Distance(vec1, vec2):
+        return (vec1-vec2).Length()
+
+
     # Adds two vectors
     def Add(vec1, vec2):
         try:

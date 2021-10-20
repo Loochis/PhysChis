@@ -51,3 +51,21 @@ class Newtonian():
 
     def TimeStepPosition(r, v, timeStep):
         return r + (v * timeStep)
+
+    # Calculates p2f
+    def MomentumTransfer(p1i, p2i, p1f):
+        netP = p1i+p2i
+        p2f = netP-p1f
+        return p2f
+
+    # Calculates p1f and p2f where they are the same
+    def MomentumSplit(p1i, p2i):
+        netP = p1i+p2i
+        return netP/2.0
+
+    # Calculates v1f and v2f where they are the same (Momentum transfer)
+    def CollideToSameVelocity(v1i, v2i, m1, m2):
+        p1i = v1i*m1
+        p2i = v2i*m2
+        return (p1i + p2i) / (m1 + m2)
+

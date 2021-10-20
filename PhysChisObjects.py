@@ -44,6 +44,9 @@ class PhysObject:
     def GetMomentum(self) -> Vector3:
         return self.GetVelocity() * self.mass
 
+    def SetMomentum(self, momentum):
+        self.velocity = momentum / self.mass
+
     # Returns the net acceleration due to fields on the generic object, TO BE OVERRIDEN IN SUBCLASSES
     def GetNetAcceleration(self, objects) -> Vector3:
         netAcc = Vector3.Zero()
@@ -94,6 +97,37 @@ class System(PhysObject):
     def __init__(self, objects = []):
         self.objects = objects
 
+    def NumObjects(self):
+        numObjs = 0
+        for obj in self.objects:
+            if isinstance(obj, PhysObject):
+                numObjs += 1
+        if numObjs > 0:
+            return numObjs
+        else:
+            raise Warning("No non-field objects in system!")
+
+    def GetNetMass(self):
+        netM = 0
+        for obj in self.objects:
+            if isinstance(obj, PhysObject):
+                netM += obj.mass
+        return netM
+
+    def CenterOfMass(self):
+        centerM = Vector3.Zero()
+        for obj in self.objects:
+            if isinstance(obj, PhysObject):
+                centerM += obj.position * obj.mass
+        return centerM / self.GetNetMass()
+
+    def CenterOfMassVelocity(self):
+        centerMV = Vector3.Zero()
+        for obj in self.objects:
+            if isinstance(obj, PhysObject):
+                centerMV += obj.velocity * obj.mass
+        return centerMV / self.GetNetMass()
+
     def Tick(self):
         for obj in self.objects:
             if isinstance(obj, PhysObject):
@@ -106,19 +140,19 @@ class System(PhysObject):
                 momentum += obj.GetMomentum()
         return momentum
 
+    def GetVelocity(self):
+        vel = Vector3.Zero()
+        for obj in self.objects:
+            if isinstance(obj, PhysObject):
+                vel += obj.GetVelocity()
+        return vel
+
     def GetNetAcceleration(self):
         acc = Vector3.Zero()
         for obj in self.objects:
             if isinstance(obj, PhysObject):
                 acc += obj.GetNetAcceleration(self.objects)
         return acc
-
-    def GetNetMass(self):
-        netM = 0
-        for obj in self.objects:
-            if isinstance(obj, PhysObject):
-                netM += obj.mass
-        return netM
 
     def GetNetForce(self):
         force = Vector3.Zero()
