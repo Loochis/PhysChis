@@ -1,22 +1,23 @@
 from PhysChisBounds import RadialBounds
-from PhysChisObjects import CelestialObject, Field, PhysObject, StandardObjects
+from PhysChisObjects import CelestialObject, Field, PhysObject, System
 from Vector import Vector3
 import Constants as C
 
-gravityField = Field(Vector3(0, -9.8, 0), globalBounds=True)
-ballList = []
-ball1 = CelestialObject(mass=0.145, vel=Vector3(0,0,0), pos=Vector3(-0.5, 0, 0), objects=ballList, bounds=RadialBounds(radius=0.0365))
-ball2 = CelestialObject(mass=0.145, vel=Vector3(0,0,0), pos=Vector3(0.5, 0, 0), objects=ballList, bounds=RadialBounds(radius=0.0365))
-ballList.append(ball1)
-ballList.append(ball2)
+#### OBJECT CREATION ####
+
+ballSystem = System()
+
+gravityField = Field(acceleration=Vector3(0,-9.8,0),globalBounds=True)
+
+ball1 = PhysObject(mass=0.9, vel=Vector3(4,-5,3), pos=Vector3(0, 0, 0), bounds=RadialBounds(radius=0))
+ball2 = PhysObject(mass=0.9, vel=Vector3(7,9,9), pos=Vector3(-1.5e11, 0, 0), bounds=RadialBounds(radius=0))
+ballSystem.objects.append(ball1)
+ballSystem.objects.append(ball2)
+ballSystem.objects.append(gravityField)
+
+#### SIMULATION ####
 
 time = 0
-while(True):
-    print("pos:",ball1.position,"t:",round(time, len(str(C.TIMESTEP))))
-    ball1.Tick()
-    time += C.TIMESTEP
-    if ball1.CollisionCheck(ball2):
-        print("Collided!")
-        break
 
-print("the basbeballs touch in: " + str(time/60/60/24) + " days")
+ballSystem.Tick()
+print(ballSystem.GetMomentum())
