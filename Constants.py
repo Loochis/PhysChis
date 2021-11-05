@@ -2,3 +2,4 @@ TIMESTEP = 0.13
 
 ONE_OVER_4PIE0 = 9e9
 G = 6.674e-11
+C = 3.8e10

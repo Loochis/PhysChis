@@ -39,11 +39,18 @@ class PhysObject:
     # Returns the velocity of the object
     def GetVelocity(self) -> Vector3:
         return self.velocity
+
+    def GetTotalEnergy(self) -> float:
+        return 
+    
+    def GetGamma(self) -> float:
+        return PhysChis.Reletavistic.GetGamma(self.velocity.Length)
     
     # Returns the momentum of the object
     def GetMomentum(self) -> Vector3:
-        return self.GetVelocity() * self.mass
+        return self.GetGamma * self.GetVelocity() * self.mass
 
+    #TODO: Set Momentum does not take Gamma into consideration
     def SetMomentum(self, momentum):
         self.velocity = momentum / self.mass
 
@@ -64,6 +71,15 @@ class PhysObject:
     # Returns the net impulse acting on the object
     def GetNetImpulse(self, objects) -> Vector3:
         return self.GetNetForce(objects) * C.TIMESTEP
+
+    def GetRestEnergy(self):
+        return self.mass*C.C**2
+    
+    def GetTotalEnergy(self):
+        return self.GetRestEnergy()*self.GetGamma()
+
+    def GetKineticEnergy(self):
+        return self.GetTotalEnergy() - self.GetRestEnergy()
 
     # Updates the position and velocity of this object by [TIMESTEP] seconds
     def Tick(self, objects):

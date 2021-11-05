@@ -1,5 +1,6 @@
 from Vector import Vector3
 import Constants as C
+import math
 
 class ElectricFields:
     # Calculates the electric force acting on Particle 1
@@ -68,4 +69,8 @@ class Newtonian():
         p1i = v1i*m1
         p2i = v2i*m2
         return (p1i + p2i) / (m1 + m2)
+
+class Reletavistic():
+    def GetGamma(v):
+        return 1.0 / math.sqrt(1 - (v**2 / C.C**2))
 
