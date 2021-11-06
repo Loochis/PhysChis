@@ -1,4 +1,4 @@
-from PhysChis import Newtonian
+from PhysChis import Newtonian, Reletavistic, Energy
 from PhysChisBounds import RadialBounds
 from PhysChisObjects import CelestialObject, Field, PhysObject, System
 from Vector import Vector3
@@ -8,24 +8,11 @@ import Constants as C
 
 system = System()
 
-gravityField = Field(acceleration=Vector3(0,0,0),globalBounds=True)
-
-ball1 = PhysObject(mass=12, vel=Vector3(4400,-3100,2600), pos=Vector3(0, 0, 0), bounds=RadialBounds(radius=0))
-ball2 = PhysObject(mass=6, vel=Vector3(-750,1800,3500), pos=Vector3(0, 0, 0), bounds=RadialBounds(radius=0))
-
-system.objects.append(ball1)
-system.objects.append(ball2)
-system.objects.append(gravityField)
+nucleus = PhysObject(mass=3.902996e-25, vel=Vector3(0,0,0))
+he4 = PhysObject(mass=6.640678e-27, vel=Vector3(0,0,0))
+nucleus2 = PhysObject(mass=3.836448e-25, vel=Vector3(0,0,0))
 
 #### SIMULATION ####
-
-time = 0
-
-p1i = ball1.GetMomentum()
-p2i = ball2.GetMomentum()
-ball1.velocity = Vector3(1300, 600, 1900)
-ball1.mass -= 2
-ball2.mass += 2
-
-ball2.SetMomentum (Newtonian.MomentumTransfer(p1i, p2i, ball1.GetMomentum()))
-print(ball2.velocity)
+print(nucleus.GetRestEnergy())
+print(he4.GetRestEnergy() + nucleus2.GetRestEnergy())
+print((nucleus.GetRestEnergy() - (he4.GetRestEnergy() + nucleus2.GetRestEnergy()))/C.EV)

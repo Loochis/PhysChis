@@ -22,7 +22,10 @@ class Vector3:
 
     # Overrides '*' Operation
     def __mul__(self, other):
-        return Vector3.Multiply(self, other)
+        if type(other) == float or type(other) == int:
+            return Vector3.Multiply(self, other)
+        else:
+            return Vector3.MultiplyVecwise(self, other)
 
     # Overrides '/' Operation
     def __truediv__(self, other):
@@ -122,6 +125,13 @@ class Vector3:
         except:
             raise TypeError("Cannot [V3] multiply a " + vec.__class__.__name__ + " and a " + b.__class__.__name__)
 
+    # Multiplies Vector
+    def MultiplyVecwise(vec, b):
+        try:
+            return Vector3(vec.x * b.x, vec.y * b.y, vec.z * b.z)
+        except:
+            raise TypeError("Cannot [V3] multiply a " + vec.__class__.__name__ + " and a " + b.__class__.__name__)
+
     # Divides Vector by a scalar
     def Divide(vec, b):
         try:
@@ -131,3 +141,9 @@ class Vector3:
                 return None
         except:
             raise TypeError("Cannot [V3] divide a " + vec.__class__.__name__ + " and a " + b.__class__.__name__)
+
+    def Dot(a, b):
+        try:
+            return a.x * b.x + a.y * b.y + a.z * b.z
+        except:
+            raise TypeError("Cannot [V3] Dot Product a " + a.__class__.__name__ + " and a " + b.__class__.__name__)

@@ -73,4 +73,13 @@ class Newtonian():
 class Reletavistic():
     def GetGamma(v):
         return 1.0 / math.sqrt(1 - (v**2 / C.C**2))
+    
+    def MatchSpeedToEnergy(mKinetic, mStatic):
+        eStatic = mStatic*C.C**2
+        eRestKinetic = mKinetic*C.C**2
+        gamma = (eStatic/eRestKinetic)+1
+        return math.sqrt((1 - ((1 / gamma)**2)) * C.C**2)
 
+class Energy():
+    def WorkOverDistance(force, displacement):
+        return Vector3.Dot(force, displacement)

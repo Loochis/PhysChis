@@ -1,3 +1,4 @@
+import math
 import PhysChis
 from PhysChisBounds import Bounds, RadialBounds
 from Vector import Vector3
@@ -44,14 +45,21 @@ class PhysObject:
         return 
     
     def GetGamma(self) -> float:
-        return PhysChis.Reletavistic.GetGamma(self.velocity.Length)
+        return PhysChis.Reletavistic.GetGamma(self.velocity.Length())
     
     # Returns the momentum of the object
     def GetMomentum(self) -> Vector3:
-        return self.GetGamma * self.GetVelocity() * self.mass
+        return self.GetVelocity() * self.mass * self.GetGamma()
 
-    #TODO: Set Momentum does not take Gamma into consideration
-    def SetMomentum(self, momentum):
+    # Returns the Approx. momentum of the object
+    def GetMomentumApprox(self) -> Vector3:
+        return self.GetVelocity() * self.mass
+
+
+    def SetMomentum(self, momentum: Vector3):
+        self.velocity = (momentum / self.mass) / math.sqrt(1 + (momentum.Length()/(self.mass*C.C))**2)
+
+    def SetMomentumApprox(self, momentum: Vector3):
         self.velocity = momentum / self.mass
 
     # Returns the net acceleration due to fields on the generic object, TO BE OVERRIDEN IN SUBCLASSES
@@ -73,13 +81,20 @@ class PhysObject:
         return self.GetNetForce(objects) * C.TIMESTEP
 
     def GetRestEnergy(self):
-        return self.mass*C.C**2
+        return self.mass*(C.C**2)
     
     def GetTotalEnergy(self):
         return self.GetRestEnergy()*self.GetGamma()
 
     def GetKineticEnergy(self):
         return self.GetTotalEnergy() - self.GetRestEnergy()
+
+    def GetKineticEnergyApprox(self):
+        return self.velocity.Length2()*self.mass*0.5
+
+    def SetKineticEnergy(self, energy):
+        newMomentum = math.sqrt(((energy+self.GetRestEnergy())**2) - (self.mass*(C.C**2))**2)/C.C
+        self.SetMomentum(self.velocity.Normalized() * newMomentum)
 
     # Updates the position and velocity of this object by [TIMESTEP] seconds
     def Tick(self, objects):
