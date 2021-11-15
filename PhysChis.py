@@ -83,3 +83,28 @@ class Reletavistic():
 class Energy():
     def WorkOverDistance(force, displacement):
         return Vector3.Dot(force, displacement)
+    
+    def GetRestEnergy(mass):
+        return mass*C.C**2
+    
+    def GetTotalEnergy(mass, speed):
+        return Energy.GetRestEnergy(mass)*Reletavistic.GetGamma(speed)
+        
+    def GetKineticEnergy(speed, mass):
+        return Energy.GetRestEnergy(mass)*(Reletavistic.GetGamma(speed)-1)
+    
+    def GetKineticEnergyApprox(speed, mass):
+        return 0.5 * mass * speed**2
+    
+    def GetSpeedFromEnergyApprox(energy, mass):
+        return math.sqrt(energy / (mass * 0.5))
+    
+    def GravPotentialAtDist(m1, m2, height):
+        return (-C.G*m1*m2)/height
+    
+    def GetEscapeVelocityApprox(mPlanet, hieghtInitial, finalSpeed):
+        eFinalOverM = 0.5*finalSpeed**2
+        eInitialOverM = Energy.GravPotentialAtDist(mPlanet, 1, hieghtInitial)
+        eDiff = eFinalOverM - eInitialOverM
+        return Energy.GetSpeedFromEnergyApprox(eDiff, 1)
+        

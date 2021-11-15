@@ -7,12 +7,5 @@ import Constants as C
 #### OBJECT CREATION ####
 
 system = System()
-
-nucleus = PhysObject(mass=3.902996e-25, vel=Vector3(0,0,0))
-he4 = PhysObject(mass=6.640678e-27, vel=Vector3(0,0,0))
-nucleus2 = PhysObject(mass=3.836448e-25, vel=Vector3(0,0,0))
-
-#### SIMULATION ####
-print(nucleus.GetRestEnergy())
-print(he4.GetRestEnergy() + nucleus2.GetRestEnergy())
-print((nucleus.GetRestEnergy() - (he4.GetRestEnergy() + nucleus2.GetRestEnergy()))/C.EV)
+#e1 = Energy.GravPotentialAtDist(C.EARTH_MASS, 5, C.EARTH_RADIUS + 35)
+print(Energy.GetEscapeVelocityApprox(4.9e24 ,6050000, 0))
