@@ -7,5 +7,9 @@ import Constants as C
 #### OBJECT CREATION ####
 
 system = System()
-#e1 = Energy.GravPotentialAtDist(C.EARTH_MASS, 5, C.EARTH_RADIUS + 35)
-print(Energy.GetEscapeVelocityApprox(4.9e24 ,6050000, 0))
+e1 = Energy.GravPotentialAtDist(C.SUN_MASS, 1, 4.9e10) + Energy.GetKineticEnergyApprox(9.5e4, 1)
+eVf = e1 - Energy.GravPotentialAtDist(C.SUN_MASS, 1, 6e12)
+print(eVf)
+
+print(Energy.GetSpeedFromEnergyApprox(4544633823, 1))
+print(Energy.GetSpeedFromEnergy(4544633823, 1))

@@ -69,6 +69,12 @@ class Newtonian():
         p1i = v1i*m1
         p2i = v2i*m2
         return (p1i + p2i) / (m1 + m2)
+    
+    def GetOrbitalVelocity(r, mP):
+        return math.sqrt((C.G*mP)/r)
+    
+    def GetOrbitalRadius(v, mP):
+        return (C.G*mP)/(v**2)
 
 class Reletavistic():
     def GetGamma(v):
@@ -98,6 +104,10 @@ class Energy():
     
     def GetSpeedFromEnergyApprox(energy, mass):
         return math.sqrt(energy / (mass * 0.5))
+    
+    def GetSpeedFromEnergy(energy, mass):
+        newMomentum = math.sqrt(((energy+Energy.GetRestEnergy(mass))**2) - (mass*(C.C**2))**2)/C.C
+        return (newMomentum / mass) / math.sqrt(1 + (newMomentum/(mass*C.C))**2)
     
     def GravPotentialAtDist(m1, m2, height):
         return (-C.G*m1*m2)/height
