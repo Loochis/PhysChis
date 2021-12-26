@@ -155,3 +155,16 @@ class Thermal:
         a = m1*c1*1000
         b = m2*c2*1000
         return (a*t1 + b*t2)/(a + b)
+    
+class PhotonsNEnergy:
+    def GetHydrogenAtomEnergyAtLevel(level):
+        return -13.6 / level**2
+    
+    def GetHydrogenOrbitRadiusFromLevel(level):
+        return (level**2)*0.53e-10
+
+    def GetWavelengthNMFromEnergyEV(energy):
+        return 1239.8 / energy
+    
+    def GetEnergyEVFromWavelengthNM(wavelength):
+        return 1239.8 / wavelength

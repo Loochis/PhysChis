@@ -1,4 +1,4 @@
-from PhysChis import Kinematics, Newtonian, Reletavistic, Energy, Thermal
+from PhysChis import Kinematics, Newtonian, PhotonsNEnergy, Reletavistic, Energy, Thermal
 from PhysChisBounds import RadialBounds
 from PhysChisObjects import CelestialObject, Field, PhysObject, System
 from Vector import Vector3
@@ -8,4 +8,10 @@ import Constants as C
 
 system = System()
 
-print(Thermal.TempFromMix(0.075, 0.7, 45, 0.006, 1.1, 19))
+mEarth = 6e24
+mAsteroid = 2100
+vf = 8800
+rf = 2e7
+ri = 4e7
+
+print(PhotonsNEnergy.GetHydrogenAtomEnergyAtLevel(5))

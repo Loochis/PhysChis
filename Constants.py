@@ -1,9 +1,13 @@
+from math import pi
+
+
 TIMESTEP = 0.13
 
 ONE_OVER_4PIE0 = 9e9
 G = 6.674e-11
 C = 2.99792458e8
 EV = 1.6e-19
+NM = 1e9
 
 ## GRAVITATIONAL ##
 EARTH_RADIUS = 6378100
@@ -21,3 +25,7 @@ ELECTRON_CHARGE = -1.602e-19
 
 ## THERMAL ##
 CWATER = 4.186
+
+## PLANCKS SCHTUFF ##
+H = 6.62907e-34
+H_BAR = H / (2*pi)
